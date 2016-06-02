@@ -7,11 +7,24 @@ security:
         in_memory:
             memory: ~
 
+        api_provider:
+            memory:
+                users:
+                    name: { password: "password" , roles: ['ROLE_USER'] }
+
     firewalls:
         # disables authentication for assets and the profiler, adapt it according to your needs
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
+
+        api:
+            pattern:  ^/api/
+            stateless: true
+            anonymous: true
+            http_basic:
+                realm: "API Hello"
+                provider: api_provider
 
         main:
             anonymous: ~
